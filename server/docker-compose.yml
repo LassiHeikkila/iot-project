@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+
+  grafana:
+    image: "grafana/grafana-oss:10.2.2"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+  influxdb:
+    image: "influxdb:2.7.3"
+    volumes:
+      - influx-data:/var/lib/influxdb2
+      - ./influxdb/config.yml:/etc/influxdb2/config.yml
+    ports:
+      - 8086:8086
+    restart: unless-stopped
+
+  telegraf-monitor:
+    image: "telegraf:1.26.3"
+    volumes:
+      - ./telegraf/telegraf-monitor.conf:/etc/telegraf/telegraf.conf
+    restart: unless-stopped
+  
+  telegraf-iot:
+    image: "telegraf:1.26.3"
+    volumes:
+      - ./telegraf/telegraf-iot.conf:/etc/telegraf/telegraf.conf
+    ports:
+      - "50123:50123/udp"
+    restart: unless-stopped
+
+volumes:
+  influx-data:
+  grafana-data:

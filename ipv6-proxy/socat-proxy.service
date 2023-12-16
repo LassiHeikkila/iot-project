@@ -1,0 +1,11 @@
+[Unit]
+Description=socat UDP port 50123 forwarder service
+
+[Service]
+ExecStart=/home/ubuntu/socat.sh
+WorkingDirectory=/home/ubuntu/
+Restart=always
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target
