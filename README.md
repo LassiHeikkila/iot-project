@@ -21,8 +21,10 @@ Additionally, you need an IPv6 proxy if your main server does not have IPv6 conn
 Instructions here assume you have SSH access to your own server.
 
 # Demo video
-TODO: insert link here
+[iot-project-demo-fake.webm](https://github.com/LassiHeikkila/iot-project/assets/10546142/fd932b3e-ca68-48e6-b392-5cafb003851e)
+
 > Note: unfortunately due to issues with the FIT IoT-LAB platform, I have been unable to record a video of the whole system working.
+> The above video uses a fake data generation script available [here](./fake-node/fake-node.py).
 
 # Implementation details and setup instructions
 
