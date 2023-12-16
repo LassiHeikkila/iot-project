@@ -9,6 +9,7 @@
 #include "shell.h"
 #include "msg.h"
 #include "luid.h"
+#include "ztimer.h"
 #include "net/gnrc.h"
 #include "net/gnrc/ipv6.h"
 #include "net/gnrc/netif.h"
@@ -211,9 +212,21 @@ int main(void)
     }
 
     /* start shell */
+    /*
     puts("All up, running the shell now");
     char line_buf[SHELL_DEFAULT_BUFSIZE];
     shell_run(shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
+    */
+    (void)shell_commands;
+
+    for (;;) {
+        // call the "udp_send" handler to send data
+        // badly named, i know :)
+        send_udp_packet(0, NULL);
+
+        // sleep for 10s
+        ztimer_sleep(ZTIMER_MSEC, 10*1000);
+    }
 
     /* should be never reached */
     return 0;
