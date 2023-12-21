@@ -5,11 +5,7 @@ import time
 import socket
 import math
 
-if len(sys.argv) < 2:
-    print("You must specify the node_id as the first argument!")
-    sys.exit(1)
-
-node_id = sys.argv[1]
+node_id = "default_fake_node"
 
 class EnvData:
     temperature: float = 0.0
@@ -55,6 +51,14 @@ def sendData():
 
 def main() -> int :
     global i
+    global node_id
+
+    if len(sys.argv) < 2:
+        print("You must specify the node_id as the first argument!")
+        sys.exit(1)
+
+    node_id = sys.argv[1]
+
     try:
         while True:
             sendData()

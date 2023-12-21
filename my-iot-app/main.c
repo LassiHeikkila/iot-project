@@ -211,7 +211,7 @@ int main(void)
         return 1;
     }
 
-    /* start shell */
+    /* don't start shell */
     /*
     puts("All up, running the shell now");
     char line_buf[SHELL_DEFAULT_BUFSIZE];

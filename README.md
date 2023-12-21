@@ -24,7 +24,7 @@ Instructions here assume you have SSH access to your own server.
 [iot-project-demo-fake.webm](https://github.com/LassiHeikkila/iot-project/assets/10546142/fd932b3e-ca68-48e6-b392-5cafb003851e)
 
 > Note: unfortunately due to issues with the FIT IoT-LAB platform, I have been unable to record a video of the whole system working.
-> The above video uses a fake data generation script available [here](./fake-node/fake-node.py).
+> The above video uses a fake data generation script available [here](./fake-node/fake_node.py).
 
 # Implementation details and setup instructions
 
@@ -55,8 +55,11 @@ make -C RIOT/examples/gnrc_border_router BOARD=iotlab-m3 BUILD_IN_DOCKER=1 ETHOS
 
 You will find the built firmware with path `RIOT/examples/gnrc_border_router/bin/iotlab-m3/gnrc_border_router.elf`.
 
+IMPORTANT NOTE: it seems that the FIT IoT-LAB border router networking only works when the firmware is built on the server.
+So run this step on the server. Make sure to source `/opt/riot.source` first and don't include `BUILD_IN_DOCKER` variable.
+
 ## Server component details
-All the services are ran using Docker Compose. This can be done by cloning this repository to your server, going into [`server`](./server/) directory, and running:
+All the services are managed with Docker Compose. They can be installed and started by cloning this repository to your server, going into [`server`](./server/) directory, and running command:
 ```console
 docker compose up
 ```
