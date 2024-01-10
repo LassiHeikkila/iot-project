@@ -1,5 +1,6 @@
 #include "temperature.h"
 #include "pressure.h"
+#include "noise.h"
 
 #include <stdbool.h>
 
@@ -33,11 +34,14 @@ int init_pressure(void) {
 
 // returns temperature in centi-Celsius
 int read_raw_temperature(int16_t *temp) {
+    int16_t tmp = 0;
     // this returns garbage due to https://github.com/RIOT-OS/RIOT/issues/20093
     // but it doesn't matter in this demo app
-    if (lpsxxx_read_temp(&dev, temp) != LPSXXX_OK) {
+    if (lpsxxx_read_temp(&dev, &tmp) != LPSXXX_OK) {
         return TEMP_OP_NOK;
     }
+    tmp += add_noise(TEMP_STDDEV);
+    *temp = tmp;
     return TEMP_OP_OK;
 }
 
@@ -47,6 +51,7 @@ int read_raw_pressure(uint32_t *pres) {
     if (lpsxxx_read_pres(&dev, &hpa) != LPSXXX_OK) {
         return PRESSURE_OP_NOK;
     }
+    hpa += add_noise(PRES_STDDEV);
     *pres = (uint32_t)hpa * 100;
     return PRESSURE_OP_OK;
 }
