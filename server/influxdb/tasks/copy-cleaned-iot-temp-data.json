@@ -1,0 +1,14 @@
+[
+    {
+        "apiVersion": "influxdata.com/v2alpha1",
+        "kind": "Task",
+        "metadata": {
+            "name": "romantic-bhabha-5fa001"
+        },
+        "spec": {
+            "every": "10m",
+            "name": "copy-cleaned-iot-temp-data",
+            "query": "import \"join\"\n\n\n\ndata =\n    from(bucket: \"iot\")\n        |> range(start: -10m, stop: now())\n        |> filter(fn: (r) => r[\"_measurement\"] == \"measurement\")\n        |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n        |> yield(name: \"raw\")\n\nmean =\n    data\n        |> aggregateWindow(every: 10s, fn: mean)\n\nstddev =\n    data\n        |> aggregateWindow(every: 10s, fn: stddev)\n\nlimits =\n    join.time(left: mean, right: stddev, as: (l, r) => ({l with _stddev: r._value}))\n        |> map(\n            fn: (r) =>\n                ({r with _measurement: \"limits\",\n                    _lower: r._value - 2.0 * r._stddev,\n                    _upper: r._value + 2.0 * r._stddev,\n                }),\n        )\n        |> to(bucket: \"iot-clean\")\n\ndata\n    |> movingAverage(n: 6)\n    |> yield(name: \"movingAverage\")\n    |> map(fn: (r) => ({r with _measurement: \"movingAverage\"}))\n    |> to(bucket: \"iot-clean\")"
+        }
+    }
+]
