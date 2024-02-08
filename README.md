@@ -1,6 +1,6 @@
 # IoT course project for University of Oulu course 521043S
 > Note: this README.md describes part 1 of the project.
-> See [README-mini-project-2.md](./README-mini-project-2.md) for part 2.
+> See [README-part-2.md](https://github.com/LassiHeikkila/iot-project/blob/main/README-part2.md) for part 2.
 
 This project has the following components:
 - IoT node firmware running on FIT IoT-LAB nodes
